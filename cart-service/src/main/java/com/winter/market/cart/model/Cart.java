@@ -16,7 +16,6 @@ public class Cart {
     private List<CartItem> items;
     private BigDecimal totalPrice;
 
-
     public void add(ProductDto product) {
 
         for (CartItem item : items) {

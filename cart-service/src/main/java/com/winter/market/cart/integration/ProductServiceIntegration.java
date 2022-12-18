@@ -10,7 +10,6 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class ProductServiceIntegration {
-
     private final RestTemplate restTemplate;
 
     public Optional<ProductDto> getProductById(Long id) {

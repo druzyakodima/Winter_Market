@@ -2,4 +2,3 @@ server:
   port: 8190
   servlet:
     context-path: /market-carts
-

@@ -7,7 +7,6 @@ CREATE TABLE categories
 
 );
 
-
 CREATE TABLE products
 (
 
@@ -66,34 +65,34 @@ insert into roles(name)
 values ('ROLE_USER'),
        ('ROLE_ADMIN');
 
-insert into users(username,password,email)
-values ('dima','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','dima@mail.ru'),
-       ('masha','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'masha@mail.ru');
+insert into users(username, password, email)
+values ('dima', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'dima@mail.ru'),
+       ('masha', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'masha@mail.ru');
 
 insert into users_roles(user_id, role_id)
-values (1,1),
-       (2,2);
+values (1, 1),
+       (2, 2);
 
 
 create table orders
 (
-    id              bigserial primary key,
-    user_id         bigint not null references users (id),
-    total_price     numeric(8, 2),
-    address         varchar(255) not null,
-    phone           varchar(255) not null,
-    created_at      timestamp default current_timestamp,
-    updated_at      timestamp default current_timestamp
+    id          bigserial primary key,
+    user_id     bigint       not null references users (id),
+    total_price numeric(8, 2),
+    address     varchar(255) not null,
+    phone       varchar(255) not null,
+    created_at  timestamp default current_timestamp,
+    updated_at  timestamp default current_timestamp
 );
 
 create table orders_items
 (
-    id                      bigserial primary key,
-    order_id                bigint references users (id),
-    product_id              bigint references products (id),
-    price_per_product       numeric(8, 2),
-    quantity                int not null,
-    price                   numeric(8, 2),
-    created_at              timestamp default current_timestamp,
-    updated_at              timestamp default current_timestamp
+    id                bigserial primary key,
+    order_id          bigint references users (id),
+    product_id        bigint references products (id),
+    price_per_product numeric(8, 2),
+    quantity          int not null,
+    price             numeric(8, 2),
+    created_at        timestamp default current_timestamp,
+    updated_at        timestamp default current_timestamp
 );

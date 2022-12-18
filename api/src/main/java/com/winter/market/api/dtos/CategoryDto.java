@@ -3,7 +3,6 @@ package com.winter.market.api.dtos;
 import java.util.List;
 
 public class CategoryDto {
-
     private Long id;
     private String title;
     private List<ProductDto> products;

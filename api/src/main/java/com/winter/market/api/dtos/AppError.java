@@ -1,6 +1,5 @@
 package com.winter.market.api.dtos;
 
-
 public class AppError {
     private String code;
     private String message;

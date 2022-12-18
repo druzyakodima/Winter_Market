@@ -24,5 +24,4 @@ public class CartItem {
         qty--;
         price = price.subtract(pricePerProduct);
     }
-
 }

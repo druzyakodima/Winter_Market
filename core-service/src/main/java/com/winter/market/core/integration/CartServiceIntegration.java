@@ -13,7 +13,6 @@ public class CartServiceIntegration {
 
    private final RestTemplate restTemplate;
 
-
     public Optional<CartDto> getCurrentCart() {
         return Optional.ofNullable(restTemplate.getForObject("http://localhost:8190/market-carts/api/v1/cart" ,CartDto.class));
     }

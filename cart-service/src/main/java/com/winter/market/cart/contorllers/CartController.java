@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
 
     private final CartService cartService;
+
     @GetMapping
     public CartDto findAll() {
         return cartService.getCurrentCart();
     }
 
-    @PutMapping ("/add/{id}")
+    @PutMapping("/add/{id}")
     public void add(@PathVariable("id") Long id) {
         cartService.addToCart(id);
     }

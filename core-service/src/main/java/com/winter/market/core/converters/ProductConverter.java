@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductConverter {
-
     public ProductDto entityToDto(Product product) {
         ProductDto productDto = new ProductDto();
 

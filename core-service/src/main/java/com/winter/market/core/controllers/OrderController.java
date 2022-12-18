@@ -30,7 +30,7 @@ public class OrderController {
                 .findByUsername(principal.getName())
                 .orElseThrow(() -> new NotFoundExciton(String.format("Пользователь %s не найден", principal.getName())));
 
-        ordersService.createOrder(user,orderData.getPhone(),orderData.getAddress());
+        ordersService.createOrder(user, orderData.getPhone(), orderData.getAddress());
     }
 
     @GetMapping("/{id}")

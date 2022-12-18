@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +26,6 @@ public class OrdersService implements IOrdersService {
     private final IProductService productService;
     private final IOrdersRepository ordersRepository;
     private final IOrderItemService orderItemService;
-
 
     @Transactional
     @Override

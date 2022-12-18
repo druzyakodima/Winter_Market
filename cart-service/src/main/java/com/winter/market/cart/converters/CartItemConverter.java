@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class CartItemConverter {
 
     public CartItemDto entityToDto(CartItem cartItem) {
-
         CartItemDto cartItemDto = new CartItemDto();
 
         cartItemDto.setProductId(cartItem.getProductId());
