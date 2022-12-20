@@ -1,11 +1,10 @@
-package com.winter.market.core.controllers;
+package com.winter.market.auth.controllers;
 
 import com.winter.market.api.dtos.AppError;
 import com.winter.market.api.dtos.JwtRequest;
 import com.winter.market.api.dtos.JwtResponse;
-import com.winter.market.api.dtos.StringResponse;
-import com.winter.market.core.service.user.UserService;
-import com.winter.market.core.utils.JwtTokenUtil;
+import com.winter.market.auth.utils.JwtTokenUtil;
+import com.winter.market.auth.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +14,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
-    @PostMapping("/auth")
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
@@ -37,8 +34,4 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @GetMapping("/auth_check")
-    public StringResponse authCheck(Principal principal) {
-        return new StringResponse(principal.getName());
-    }
 }

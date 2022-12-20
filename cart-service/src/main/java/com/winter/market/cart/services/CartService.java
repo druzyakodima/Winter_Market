@@ -1,7 +1,6 @@
-package com.winter.market.cart.service.cart;
+package com.winter.market.cart.services;
 
 import com.winter.market.api.dtos.CartDto;
-import com.winter.market.api.dtos.NotFoundExciton;
 import com.winter.market.api.dtos.ProductDto;
 import com.winter.market.cart.converters.CartConverter;
 import com.winter.market.cart.integration.ProductServiceIntegration;
@@ -30,7 +29,7 @@ public class CartService implements ICartService{
 
     public void addToCart(Long id) {
 
-        ProductDto productDto = productService.getProductById(id).orElseThrow(() -> new NotFoundExciton("Продукт с id: " + id + " не найден"));
+        ProductDto productDto = productService.getProductById(id);
 
         for (CartItem cartItem : cart.getItems()) {
             if (cartItem.getProductId().equals(productDto.getId())) {

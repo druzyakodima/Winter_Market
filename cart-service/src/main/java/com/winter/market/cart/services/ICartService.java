@@ -1,4 +1,4 @@
-package com.winter.market.cart.service.cart;
+package com.winter.market.cart.services;
 
 import com.winter.market.api.dtos.CartDto;
 

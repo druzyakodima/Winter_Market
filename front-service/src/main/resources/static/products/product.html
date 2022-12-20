@@ -50,11 +50,6 @@
                 <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
                     <button class="btn btn-outline-dark btn-sm" ng-click="tryToLogout()">Выйти</button>
                 </li>
-
-                <li class="nav-item" style="padding: 4px;">
-                    <button class="btn btn-outline-dark btn-sm" ng-click="authCheck()">Кто я?</button>
-                </li>
-
             </ul>
         </div>
 
@@ -64,29 +59,30 @@
             </form>
         </div>
 
-        <form ng-controller="indexController" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="number" placeholder="Id" aria-label="Search">
+        <form ng-click="findProductById(id)" action="product-form-result-find-id.html" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" ng-model="id" type="text" placeholder="Id" aria-label="Search">
             <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
         </form>
 
     </nav>
 
+    <div class="form-group mx-5 mt-3">
+        <form class="form-inline" ng-submit="filterTable()">
 
-    <div class="form-group mt-2">
-        <form class="form-inline" ng-click="findProductById()">
-            <div class="form-group">
-                <input type="number" th:field="*{id}" class="form-control" id="ID" name="ID"
-                       placeholder="ID">
+            <div class="form-group mx-1">
+                <input type="text" class="form-control" ng-model="Filter.titleFilter" placeholder="Title filter">
             </div>
 
-            <form class="d-inline">
-                <button type="submit" ng-click="deleteProduct(id)" class="btn btn-danger mx-2">Delete</button>
-            </form>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="Filter.priceMinFilter" placeholder="Price from">
+            </div>
 
+            <div class="form-group mx-1">
+                <input type="text" class="form-control" ng-model="Filter.priceMaxFilter" placeholder="Price aup to">
+            </div>
+            <button type="submit"  class="btn btn-primary mx-2">OK</button>
         </form>
-
     </div>
-
 
     <table class="table table-bordered mt-2">
         <thead>
@@ -105,12 +101,9 @@
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>
-
                 <button type="submit" class="btn btn-primary form-inline" ng-click="addProductCart(p.id)">Add to cart
                 </button>
-
                 <button class="btn btn-danger form-inline" ng-click="deleteProduct(p.id)">Delete</button>
-
             </td>
         </tr>
         </tbody>

@@ -1,7 +1,7 @@
-package com.winter.market.core.service.user;
+package com.winter.market.auth.services;
 
-import com.winter.market.core.entities.Role;
-import com.winter.market.core.entities.User;
+import com.winter.market.auth.entities.Role;
+import com.winter.market.auth.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;

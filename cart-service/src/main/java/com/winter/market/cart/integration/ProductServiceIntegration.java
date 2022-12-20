@@ -1,18 +1,35 @@
 package com.winter.market.cart.integration;
 
+import com.winter.market.api.dtos.NotFoundExciton;
 import com.winter.market.api.dtos.ProductDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 public class ProductServiceIntegration {
-    private final RestTemplate restTemplate;
+    private final WebClient productServiceWebClient;
 
-    public Optional<ProductDto> getProductById(Long id) {
-        return Optional.ofNullable(restTemplate.getForObject("http://localhost:8189/market/api/v1/products/" + id, ProductDto.class));
+    @Autowired
+    public ProductServiceIntegration(WebClient productServiceWebClient) {
+        this.productServiceWebClient = productServiceWebClient;
+    }
+
+    public ProductDto getProductById(@PathVariable("id") Long id) {
+
+       return productServiceWebClient.get()
+                .uri("/api/v1/products/" + id)
+                .retrieve()
+                .onStatus(
+                        httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
+                        clientResponse -> Mono.error(new NotFoundExciton("Товар не найден в продуктовом МС"))
+                        )
+                .bodyToMono(ProductDto.class)
+                .block();
+
     }
 }

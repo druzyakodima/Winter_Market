@@ -1,4 +1,4 @@
-package com.winter.market.core.utils;
+package com.winter.market.auth.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
