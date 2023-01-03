@@ -1,72 +1,53 @@
 package com.winter.market.cart.services;
 
-import com.winter.market.api.dtos.CartDto;
 import com.winter.market.api.dtos.ProductDto;
-import com.winter.market.cart.converters.CartConverter;
 import com.winter.market.cart.integration.ProductServiceIntegration;
 import com.winter.market.cart.model.Cart;
-import com.winter.market.cart.model.CartItem;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
 public class CartService implements ICartService{
 
-    private Cart cart;
-    private final CartConverter cartConverter;
     private final ProductServiceIntegration productService;
 
-    @PostConstruct
-    public void init() {
-        cart = new Cart();
-        cart.setItems(new ArrayList<>());
-    }
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public void addToCart(Long id) {
 
-        ProductDto productDto = productService.getProductById(id);
+    public Cart getCurrentCart(String cartId) {
 
-        for (CartItem cartItem : cart.getItems()) {
-            if (cartItem.getProductId().equals(productDto.getId())) {
-
-                cartItem.incrementQty();
-                cart.recalculate();
-
-                return;
-            }
+        if (!redisTemplate.hasKey(cartId)) {
+            Cart cart = new Cart();
+            redisTemplate.opsForValue().set(cartId, cart);
         }
 
-        cart.add(productDto);
+        return (Cart) redisTemplate.opsForValue().get(cartId);
     }
 
-    public CartDto getCurrentCart() {
-        return cartConverter.entityToDto(cart);
+    public void addToCart(String cartId ,Long id) {
+        execute(cartId, cart -> {
+            ProductDto productDto = productService.getProductById(id);
+            cart.add(productDto);
+        });
     }
 
-    public void delete(Long id) {
-
-        for (CartItem cartItem : cart.getItems()) {
-            if (cartItem.getProductId().equals(id)) {
-                cartItem.decrementQty();
-                cart.recalculate();
-
-                if (cartItem.getQty() == 0) {
-                    cart.getItems().remove(cartItem);
-                }
-
-                return;
-            }
-        }
-
-        cart.recalculate();
+    public void delete(String cartId ,Long id) {
+        execute(cartId, cart -> cart.delete(id));
     }
 
-    public void clearCart() {
-        cart.clear();
+    public void clearCart(String cartId) {
+        execute(cartId, Cart::clear);
+    }
+
+    public void execute(String cartId, Consumer<Cart> action) {
+        Cart cart = getCurrentCart(cartId);
+        action.accept(cart);
+        redisTemplate.opsForValue().set(cartId, cart);
     }
 }
