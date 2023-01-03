@@ -1,10 +1,9 @@
-package com.winter.market.core.service;
+package com.winter.market.auth.services;
 
-import com.winter.market.core.entities.Role;
-import com.winter.market.core.repository.RoleRepository;
+import com.winter.market.auth.entities.Role;
+import com.winter.market.auth.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 @Service
 @RequiredArgsConstructor
 public class RoleService {

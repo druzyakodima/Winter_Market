@@ -2,7 +2,6 @@ package com.winter.market.api.dtos;
 
 import java.math.BigDecimal;
 
-
 public class CartItemDto {
     private Long productId;
     private String productTitle;

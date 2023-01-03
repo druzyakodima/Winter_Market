@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CartConverter {
 
-   private final CartItemConverter cartItemConverter;
+    private final CartItemConverter cartItemConverter;
+
     public CartDto entityToDto(Cart cart) {
 
         CartDto cartDto = new CartDto();

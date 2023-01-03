@@ -1,4 +1,3 @@
-
 angular.module('market', ['ngStorage']).controller('indexController', function ($scope, $http, $localStorage) {
 
     $scope.tryToAuth = function () {
@@ -34,15 +33,14 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
         if ($localStorage.winterMarketUser) {
 
             return true;
-        }else {
+        } else {
             return false;
         }
     };
 
 
-
     $scope.authCheck = function () {
-        $http.get('http://localhost:8189/market/auth_check/').then(function (response){
+        $http.get('http://localhost:8189/market/auth_check/').then(function (response) {
             alert(response.data.value)
         });
     };
@@ -131,7 +129,7 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
 
                 alert("Place on order")
 
-                $localStorage.OrderData = {phone: response.data.phone, address: response.data.address };
+                $localStorage.OrderData = {phone: response.data.phone, address: response.data.address};
                 $scope.OrderData.address = response.data.address;
                 $scope.OrderData.phone = response.data.phone;
 

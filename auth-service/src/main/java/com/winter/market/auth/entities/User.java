@@ -1,5 +1,4 @@
-package com.winter.market.core.entities;
-
+package com.winter.market.auth.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

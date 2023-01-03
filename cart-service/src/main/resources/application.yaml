@@ -3,3 +3,9 @@ server:
   servlet:
     context-path: /market-carts
 
+integrations:
+  product-service:
+    url: http://localhost:8189/market/
+    connect-timeout: 5000
+    read-timeout: 10000
+    write-timeout: 5000

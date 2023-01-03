@@ -1,8 +1,8 @@
-package com.winter.market.core.service.user;
+package com.winter.market.auth.services;
 
-import com.winter.market.core.entities.Role;
-import com.winter.market.core.entities.User;
-import com.winter.market.core.repository.UserRepository;
+import com.winter.market.auth.entities.Role;
+import com.winter.market.auth.entities.User;
+import com.winter.market.auth.repositories.UserRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

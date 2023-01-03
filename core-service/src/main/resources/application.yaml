@@ -19,9 +19,11 @@ spring:
       enabled: true
       settings:
         web-allow-others: false
-jwt:
-  secret: h4f8093h4f983yhrt9834hr0934hf0hf493g493gf438rh438th34g34g
-  lifetime: 360000
 
-
+integrations:
+  cart-service:
+    url: http://localhost:8190/market-carts/
+    connect-timeout: 5000
+    read-timeout: 10000
+    write-timeout: 5000
 

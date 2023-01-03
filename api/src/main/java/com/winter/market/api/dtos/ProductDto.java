@@ -10,7 +10,6 @@ public class ProductDto {
     private BigDecimal price;
     private String categoryTitle;
 
-
     public Long getId() {
         return id;
     }

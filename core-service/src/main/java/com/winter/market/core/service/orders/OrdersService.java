@@ -1,11 +1,9 @@
 package com.winter.market.core.service.orders;
 
 import com.winter.market.api.dtos.CartDto;
-import com.winter.market.api.dtos.CartItemDto;
 import com.winter.market.api.dtos.NotFoundExciton;
 import com.winter.market.core.entities.Order;
 import com.winter.market.core.entities.OrderItem;
-import com.winter.market.core.entities.User;
 import com.winter.market.core.integration.CartServiceIntegration;
 import com.winter.market.core.repository.IOrdersRepository;
 import com.winter.market.core.service.product.IProductService;
@@ -14,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,12 +25,11 @@ public class OrdersService implements IOrdersService {
     private final IOrdersRepository ordersRepository;
     private final IOrderItemService orderItemService;
 
-
     @Transactional
     @Override
-    public void createOrder(User user, String phone, String address) {
+    public void createOrder(String username, String phone, String address) {
 
-        CartDto cart = cartService.getCurrentCart().orElseThrow(() -> new NotFoundExciton("Корзина не найдена"));
+        CartDto cart = cartService.getCurrentCart();
         Order order = new Order();
 
         List<OrderItem> orderItems = cart.getItems().stream().map(cartItem -> new OrderItem(
@@ -46,14 +42,14 @@ public class OrdersService implements IOrdersService {
 
         orderItems.forEach(orderItemService::save);
 
-        order.setUser(user);
+        order.setUsername(username);
         order.setPhone(phone);
         order.setAddress(address);
         order.setItems(orderItems);
         order.setTotalPrice(cart.getTotalPrice());
 
         ordersRepository.save(order);
-        cart.getItems().clear();
+        cartService.clear();
     }
 
     @Override

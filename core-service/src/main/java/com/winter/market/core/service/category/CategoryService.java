@@ -4,7 +4,6 @@ import com.winter.market.core.entities.Category;
 import com.winter.market.core.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @RequiredArgsConstructor

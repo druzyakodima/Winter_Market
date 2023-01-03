@@ -1,7 +1,6 @@
-package com.winter.market.cart.service.cart;
+package com.winter.market.cart.services;
 
 import com.winter.market.api.dtos.CartDto;
-import org.springframework.stereotype.Service;
 
 public interface ICartService {
 

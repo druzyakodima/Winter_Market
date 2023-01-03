@@ -1,7 +1,6 @@
 package com.winter.market.api.dtos;
 
 public class StringResponse {
-
     private String value;
 
     public StringResponse(String value) {
