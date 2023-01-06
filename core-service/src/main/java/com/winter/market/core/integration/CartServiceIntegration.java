@@ -18,27 +18,21 @@ public class CartServiceIntegration {
         this.cartServiceWebClient = cartServiceWebClient;
     }
 
-    public CartDto getCurrentCart() {
+    public CartDto getCurrentCart(String username) {
 
         return cartServiceWebClient.get()
-                .uri("/api/v1/cart")
+                .uri("/api/v1/cart/0")
+                .header("username", username)
                 .retrieve()
-                .onStatus(
-                        httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
-                        clientResponse -> Mono.error(new NotFoundExciton("Товар не найден в продуктовом МС"))
-                )
                 .bodyToMono(CartDto.class)
                 .block();
     }
 
-    public void clear() {
+    public void clear(String username) {
         cartServiceWebClient.get()
-                .uri("/api/v1/cart/clear")
+                .uri("/api/v1/cart/0/clear")
+                .header("username", username)
                 .retrieve()
-                .onStatus(
-                        httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
-                        clientResponse -> Mono.error(new NotFoundExciton("Товар не найден в продуктовом МС"))
-                )
                 .toBodilessEntity()
                 .block();
     }

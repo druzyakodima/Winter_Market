@@ -1,0 +1,21 @@
+<div class="container">
+
+    <div class="form-inline mx-3 mt-3">
+        <a href="#!/products" class="btn btn-primary">To the main page</a>
+    </div>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <td>ID Заказа</td>
+            <td>Цена</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="o in orders">
+            <td>{{o.id}}</td>
+            <td>{{o.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
