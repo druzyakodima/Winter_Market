@@ -3,15 +3,17 @@ package com.winter.market.core.controllers;
 import com.winter.market.api.dtos.NotFoundExciton;
 import com.winter.market.api.dtos.ProductDto;
 import com.winter.market.core.converters.ProductConverter;
+import com.winter.market.core.entities.Product;
 import com.winter.market.core.service.product.IProductService;
 import com.winter.market.core.utils.Filter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -22,28 +24,22 @@ public class ProductController {
     private final ProductConverter productConverter;
 
     @GetMapping
-    public List<ProductDto> findAllProduct() {
+    public Page<ProductDto> findAllProduct(@RequestParam(required = false, name = "priceMinFilter") BigDecimal priceMinFilter,
+                                           @RequestParam(required = false, name = "priceMaxFilter") BigDecimal priceMaxFilter,
+                                           @RequestParam(required = false, name = "titleFilter") String titleFilter,
+                                           @RequestParam(defaultValue = "1", name = "p") Integer page,
+                                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        if (page < 1) {
+            page = 1;
+        }
 
-        return productService
-                .findAll()
-                .stream()
-                .map(productConverter::entityToDto)
-                .collect(Collectors.toList());
-    }
+        Specification<Product> spec = productService.findWithFilter(priceMinFilter,priceMaxFilter,titleFilter);
 
-
-    @PostMapping("/filter")
-    public List<ProductDto> findProductWithFilter(@RequestBody Filter filter) {
-        List<ProductDto> productDtos = productService.findWithFilter
-                (filter.getPriceMinFilter(),
-                        filter.getPriceMaxFilter(),
-                        filter.getTitleFilter());
-
-        return productDtos;
-
+        return productService.findAll(spec,page - 1, pageSize).map(productConverter::entityToDto);
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ProductDto findProductById(@PathVariable("id") Long id) {
 
         return productConverter

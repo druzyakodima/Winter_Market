@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="form-group mx-5 mt-3">
+        <form class="form-inline" ng-submit="fillTable()">
+
+            <div class="form-group mx-1">
+                <input type="text" class="form-control" ng-model="filter.titleFilter" placeholder="Title filter">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="filter.priceMinFilter" placeholder="Price from">
+            </div>
+
+            <div class="form-group mx-1">
+                <input type="text" class="form-control" ng-model="filter.priceMaxFilter" placeholder="Price aup to">
+            </div>
+            <button type="submit" class="btn btn-primary mx-2">OK</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered mt-2">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Product Id</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in productsPage.content">
+            <td>{{p.id}}</td>
+            <td>{{p.productId}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="submit" class="btn btn-primary form-inline" ng-click="addProductCart(p.id)">Add to cart
+                </button>
+                <button class="btn btn-danger form-inline" ng-click="deleteProduct(p.id)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" ng-repeat="pageIndex in pagesList">
+                <button class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</button>
+            </li>
+        </ul>
+    </nav>
+
+</div>
