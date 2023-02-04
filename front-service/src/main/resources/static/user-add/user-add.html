@@ -1,0 +1,29 @@
+<div>
+    <hr>
+    <form ng-submit="createNewUser()">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="user.username" placeholder="Username">
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="user.password" placeholder="Password">
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="user.email" placeholder="Email">
+        </div>
+
+        <div class="form-group">
+            <label for="selectRoles">Select roles</label>
+            <select multiple class="form-control" id="selectRoles">
+                <option ng-repeat="r in role" ng-model="user.roles"  >{{r.name}}</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create new user</button>
+    </form>
+    <div class="form-inline mx-3 mt-3">
+        <a href="#!/products" class="btn btn-primary">To the main page</a>
+    </div>
+    <br>
+</div>
