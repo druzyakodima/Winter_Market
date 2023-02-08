@@ -2,7 +2,6 @@ package com.winter.market.core.service.product;
 
 import com.winter.market.api.dtos.ProductDto;
 import com.winter.market.core.entities.Product;
-import com.winter.market.core.utils.Filter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 
