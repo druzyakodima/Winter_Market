@@ -34,12 +34,13 @@ public class ProductService implements IProductService {
 
     @Override
     public void create(ProductDto productDto) {
-        Product product = new Product();
 
-        product.setProductId(productDto.getProductId());
-        product.setTitle(productDto.getTitle());
-        product.setPrice(productDto.getPrice());
-        product.setCategory(categoryService.findByIdTitle(productDto.getCategoryTitle()).orElseThrow(() -> new NotFoundExciton("Продукт с title: " + productDto.getTitle() + " не найден")));
+         Product product = Product.Builder.newBuilder()
+                 .withProductId(productDto.getId())
+                 .withTitle(productDto.getTitle())
+                 .withPrice(productDto.getPrice())
+                 .withCategory(categoryService.findByIdTitle(productDto.getCategoryTitle()).orElseThrow(() -> new NotFoundExciton("Продукт с title: " + productDto.getTitle() + " не найден")))
+                 .build();
 
         productRepository.save(product);
     }
