@@ -9,7 +9,6 @@ public class CartDto {
     public List<CartItemDto> getItems() {
         return items;
     }
-
     public void setItems(List<CartItemDto> items) {
         this.items = items;
     }

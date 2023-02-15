@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
@@ -27,9 +28,14 @@ public class OrdersService implements IOrdersService {
 
     @Transactional
     @Override
-    public void createOrder(String username, String phone, String address) {
+    public Order createOrder(String username, String phone, String address) {
 
-        CartDto cart = cartService.getCurrentCart();
+        CartDto cart = cartService.getCurrentCart(username);
+
+        if (cart.getItems().isEmpty()) {
+            throw new IllegalStateException("Нельзя оформить заказ для пустой корзины");
+        }
+
         Order order = new Order();
 
         List<OrderItem> orderItems = cart.getItems().stream().map(cartItem -> new OrderItem(
@@ -49,11 +55,18 @@ public class OrdersService implements IOrdersService {
         order.setTotalPrice(cart.getTotalPrice());
 
         ordersRepository.save(order);
-        cartService.clear();
+        cartService.clear(username);
+        return order;
     }
 
     @Override
-    public Order findById(Long id) {
-        return ordersRepository.findById(id).orElseThrow(() -> new NotFoundExciton("Заказ не найден id: " + id));
+    public Optional<Order> findById(Long id) {
+        return ordersRepository.findById(id);
     }
+
+    @Override
+    public List<Order> findUserOrders(String username) {
+        return ordersRepository.findAllByUsername(username);
+    }
+
 }
