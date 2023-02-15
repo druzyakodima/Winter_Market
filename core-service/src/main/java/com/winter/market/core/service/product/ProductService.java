@@ -21,6 +21,7 @@ public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
+
     @Override
     public Page<Product> findAll(Specification<Product> spec, int page, int pageSize) {
         return productRepository.findAll(spec, PageRequest.of(page, pageSize));
