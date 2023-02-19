@@ -3,7 +3,6 @@ package com.winter.market.api.dtos;
 import java.math.BigDecimal;
 
 public class ProductDto {
-
     private Long id;
     private Long productId;
     private String title;

@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class CartConverter {
 
     private final CartItemConverter cartItemConverter;
-
     public CartDto entityToDto(Cart cart) {
 
         CartDto cartDto = new CartDto();

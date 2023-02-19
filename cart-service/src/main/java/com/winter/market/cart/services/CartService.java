@@ -16,10 +16,7 @@ import java.util.function.Consumer;
 public class CartService implements ICartService{
 
     private final ProductServiceIntegration productService;
-
     private final RedisTemplate<String, Object> redisTemplate;
-
-
     public Cart getCurrentCart(String cartId) {
 
         if (!redisTemplate.hasKey(cartId)) {
